@@ -80,15 +80,11 @@ void draw_histog(cv::Mat& histimage, cv::Mat& hist, int hist_h, int hist_w, cv::
 int main(int argc, char **argv)
 {
       int regime = 1;
-      //std::cout << "Input working regime 1 or 2 \n";
-      //std::cin >> regime;
 
       if(regime == 1)
       { 
             std::string path = "video.mp4";
-            //std::cout << "Input path to video file\n";
-            //std::cin >> path;
-            cv::VideoCapture cap(path); //Обработка видео
+            cv::VideoCapture cap(path); 
             cv::Mat src_image;
             bool check = cap.read(src_image);
             while(check)
@@ -119,21 +115,23 @@ int main(int argc, char **argv)
                   cv::imshow("Gray Histogram for processed image", histGrayImage);
                   check = cap.read(src_image);
                   cv::waitKey(1000);
-                  }
-                  }
-                  else if (regime == 2)
-                  {
-                        std::string path;
-                        std::cout << "Input path to picture file\n";
-                        std::cin >> path;
-                        cv::Mat src_image = cv::imread(path);
-                        cv::namedWindow("Change image brighntness", cv::WINDOW_AUTOSIZE);
-                        int st_pos = 1;
-                        cv::createTrackbar("Multiplication coefficient", "Change image brighntness", &st_pos, 10, multiplication, &src_image);
-                        cv::createTrackbar("Addition coefficient", "Change image brighntness", 0, 255, additional, &src_image);
-                        cv::imshow("Change image brighntness", src_image);
-                        cv::waitKey();
-                  }
-                  else
-                  {}
+            }
+      }
+      else if (regime == 2)
+      {
+            std::string path;
+            std::cout << "Input path to picture file\n";
+            std::cin >> path;
+            cv::Mat src_image = cv::imread(path);
+            cv::namedWindow("Change image brighntness", cv::WINDOW_AUTOSIZE);
+            int st_pos = 1;
+            cv::createTrackbar("Multiplication coefficient", "Change image brighntness", &st_pos, 10, multiplication, &src_image);
+            cv::createTrackbar("Addition coefficient", "Change image brighntness", 0, 255, additional, &src_image);
+            cv::imshow("Change image brighntness", src_image);
+            cv::waitKey();
+      }
+      else
+      {
+            break;
+      }
 }
