@@ -1,3 +1,0 @@
-/home/validov/projects/base work with color/CMakeFiles/rebuild_cache.dir
-/home/validov/projects/base work with color/CMakeFiles/edit_cache.dir
-/home/validov/projects/base work with color/CMakeFiles/base_color.dir
