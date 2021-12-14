@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <utility>
 
+
 void multiplication(int n, void * im)
 {
       cv::Mat * image = static_cast<cv::Mat*>(im);
@@ -23,6 +24,7 @@ void multiplication(int n, void * im)
       }
       cv::imshow("Change image brighntness", new_image);
 }
+
 
 void additional(int n, void * im)
 {
@@ -42,6 +44,7 @@ void additional(int n, void * im)
       cv::imshow("Change image brighntness", new_image);
 }
 
+
 void Calculation_hist(const cv::Mat* images, cv::Mat& hist, int hist_w, int hist_h, cv::Mat& hist_image)
 {
       int histSize = 256;
@@ -50,6 +53,7 @@ void Calculation_hist(const cv::Mat* images, cv::Mat& hist, int hist_w, int hist
       cv::calcHist(images, 1, 0, cv::Mat(), hist, 1, &histSize, histRange, true, false );
       cv::normalize(hist, hist, 0, hist_image.rows, cv::NORM_MINMAX, -1, cv::Mat());
 }
+
 
 void draw_hist(const std::vector<std::pair<cv::Mat, std::pair<cv::Mat, cv::Scalar>>>&  windowhist, int hist_h, int hist_w)
 {
@@ -66,25 +70,18 @@ void draw_hist(const std::vector<std::pair<cv::Mat, std::pair<cv::Mat, cv::Scala
       }
 }
 
-void draw_histog(cv::Mat& histimage, cv::Mat& hist, int hist_h, int hist_w, cv::Scalar sc)
-{
-      int histSize = 256;
-      int bin_w = cvRound( (double) hist_w/histSize );
-      for( int i = 1; i < histSize; i++ ) {
-      cv::line( histimage, cv::Point(bin_w*(i-1), hist_h - cvRound(hist.at<float>(i-1))),
-      cv::Point(bin_w*(i), hist_h - cvRound(hist.at<float>(i)) ), sc, 2, 8, 0);
-}
-}
-
 
 int main(int argc, char **argv)
 {
-      int regime = 1;
-
+      int regime;
+      std::cout << "Input working regime 1 or 2 \n";
+      std::cin >> regime;
       if(regime == 1)
       { 
-            std::string path = "video.mp4";
-            cv::VideoCapture cap(path); 
+            std::string path ;
+            std::cout << "Input path to video file:\n";
+            std::cin >> path;
+            cv::VideoCapture cap(path);
             cv::Mat src_image;
             bool check = cap.read(src_image);
             while(check)
@@ -115,23 +112,21 @@ int main(int argc, char **argv)
                   cv::imshow("Gray Histogram for processed image", histGrayImage);
                   check = cap.read(src_image);
                   cv::waitKey(1000);
-            }
-      }
-      else if (regime == 2)
-      {
-            std::string path;
-            std::cout << "Input path to picture file\n";
-            std::cin >> path;
-            cv::Mat src_image = cv::imread(path);
-            cv::namedWindow("Change image brighntness", cv::WINDOW_AUTOSIZE);
-            int st_pos = 1;
-            cv::createTrackbar("Multiplication coefficient", "Change image brighntness", &st_pos, 10, multiplication, &src_image);
-            cv::createTrackbar("Addition coefficient", "Change image brighntness", 0, 255, additional, &src_image);
-            cv::imshow("Change image brighntness", src_image);
-            cv::waitKey();
-      }
-      else
-      {
-            break;
-      }
+                  }
+                  }
+                  else if (regime == 2)
+                  {
+                        std::string path;
+                        std::cout << "Input path to picture file\n";
+                        std::cin >> path;
+                        cv::Mat src_image = cv::imread(path);
+                        cv::namedWindow("Change image brighntness", cv::WINDOW_AUTOSIZE);
+                        int st_pos = 1;
+                        cv::createTrackbar("Multiplication coefficient", "Change image brighntness", &st_pos, 10, multiplication, &src_image);
+                        cv::createTrackbar("Addition coefficient", "Change image brighntness", 0, 255, additional, &src_image);
+                        cv::imshow("Change image brighntness", src_image);
+                        cv::waitKey();
+                  }
+                  else
+                  {return 0;}
 }
