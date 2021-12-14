@@ -1,1 +1,6 @@
-base_color CMakeCache.txt Makefile cmake_install.cmake CMakeFiles/
+base_color
+CMakeCache.txt
+Makefile
+cmake_install.cmake 
+CMakeFiles/
+.gitignore.swp
